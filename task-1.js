@@ -40,9 +40,7 @@ function createButtons(){
     const $calculateButton = document.createElement("button")
     $calculateButton.innerText = "Calculate"
 
-    const $reset = document.createElement("button")
-    $reset.type = "reset"
-    $reset.innerText = "Reset"
+    const $reset = document.createElement("reset")
 
     const $strong = document.createElement("strong")
     $strong.id = "announce-results"
