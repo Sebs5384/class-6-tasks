@@ -3,18 +3,19 @@
 <head>
   <title>Clase 6 - Tarea 1</title>
 </head>
+
 <body>
-  <form id="members-ask" onsubmit="return false">
-    <strong id="family-ask">¿How many members does your family have?</strong><br>
-    <input type="number" placeholder="Entry members" id="member">
-    <input type="submit" id="send-members" value="Submit">
+  <form id="age-calculator-structure">
+      
+    <header id="family-header">¿How many members does your family have?</header><br>
+    <input type="number" placeholder="Entry members" id="members-quantity">
+    <input type="submit" id="quantity-submit" value="Submit">
     <input type="reset" value="Reset" id="reset-button"><br><br>
+    <strong id="quantity-validation"></strong> 
+    
+    <div id="members-list"></div>
   </form>
 
-  <div id="members-list">
-
-    <strong id="announce"></strong>
-  </div>
-<script src="./task-1.js"></script>  
+  <script src="./js/borrador.js"></script>
 </body>
 </html>

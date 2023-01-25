@@ -1,86 +1,91 @@
-document.querySelector("#send-members").onclick = function(){
-   
-    const $membersNumber = document.querySelector("#member");
-    const $announce = document.querySelector("#announce");   
+document.querySelector("#quantity-submit").onclick = function(event){
+
+    const $membersNumber = document.querySelector("#members-quantity");
+    const $validation = document.querySelector("#quantity-validation");
     const membersNumber = $membersNumber.value 
-   
+
     if (membersNumber == 0){
-        $announce.innerText = 'Introduce valid numbers !'
-    } else if (!document.querySelector('#new-member')){ 
-     createMembers(membersNumber);
-     createButtons();
-     $announce.remove();
+        $validation.innerText = 'Introduce valid numbers !'
+    } else if (!document.querySelector(".input-list")){      
+        createMembers(membersNumber);
+        createButtons();
+        $validation.remove();
+    }
+    return false
+}
+
+function createMembers(quantity){
+
+    for (let i = 0; i < quantity; i++){ 
+        const $div = document.createElement("div")
+
+        const $label = document.createElement("label")
+        $label.innerText = `Family member number #${i + 1}`
+
+        const $input = document.createElement("input")
+        $input.type = "number"
+        $input.className = "input-list"
+
+        $div.appendChild($label)
+        $div.appendChild($input)
+
+        const $membersNumber = document.querySelector("#members-list")
+        $membersNumber.appendChild($div) 
     }
 }
 
-function createMembers(number){
-                  
-    for (let i = 0; i < number; i++){ 
-    const $div = document.createElement('div')
-    
-    const $label = document.createElement('label')
-    $label.innerText = `Family member number #${i + 1}`
+function createButtons(){
+    const $div = document.querySelector("#members-list")
 
-    const $input = document.createElement('input')
-    $input.type = 'number'
-    $input.className = 'create-member'
-    $input.id = 'new-member'
+    const $calculateButton = document.createElement("button")
+    $calculateButton.innerText = "Calculate"
 
-    $div.appendChild($label)
-    $div.appendChild($input)
+    const $reset = document.createElement("button")
+    $reset.type = "reset"
+    $reset.innerText = "Reset"
 
-    const $membersNumber = document.querySelector('#members-list')
-    $membersNumber.appendChild($div) 
-    }
-}
+    const $strong = document.createElement("strong")
+    $strong.id = "announce-results"
 
-function createButtons($membersNumber){
-    const $div = document.querySelector('#members-list')
-    
-    const $calculateButton = document.createElement('button')
-    $calculateButton.innerText = 'Calculate'
-    
-    const $redo = document.createElement('button')
-    $redo.innerText = 'Redo'
-
-    const $strong = document.createElement('strong')
-    $strong.id = 'announce-results'
-
-    const $br = document.createElement('br')
+    const $br = document.createElement("br")
 
     $div.appendChild($calculateButton)
-    $div.appendChild($redo)
+    $div.appendChild($reset)
     $div.appendChild($strong)
 
     $calculateButton.onclick = function(){
-        const ageValues = document.querySelectorAll('.create-member')
+        const $list = document.querySelectorAll(".input-list")
         const $announce = document.querySelector("#announce-results")
-        let min = Infinity
-        let max = 0  
-        let avg = 0
-        for (let i = 0; i < ageValues.length; i++){
-      
-           let number = (parseInt(ageValues[i].value))
-           if(isNaN(number)){
-            $announce.textContent = `Please introduce valid ages for each member`
-            return;
-           }
-           min = Math.min(min, number)
-           max = Math.max(max, number)
-           avg += number   
+        
+        let minimumAge = parseInt($list[0].value)
+        let maximumAge = parseInt($list[0].value)
+        let ageSum = 0
+        for (let i = 0; i < $list.length; i++){
+
+           let age = (parseInt($list[i].value))
+           if(isNaN(age)){
+               $announce.textContent = `Please introduce valid numbers for each member`
+               return false; 
+            }
+
+            if ( age > maximumAge){
+                maximumAge = age
+            } else if ( age < minimumAge){
+                minimumAge = age
+            }
+            ageSum += age
         }
-     const average = avg / ageValues.length   
-     $announce.textContent = `The minimun age in your family is ${min} the higher is ${max} and the average of the whole is ${average.toFixed(0)}`
-       
-     $calculateButton.remove();
-            
-     $announce.appendChild($br)
-     $announce.appendChild($redo)
+        const average = ageSum / $list.length
+        $announce.textContent = `The minimun age in your family is ${minimumAge} the higher is ${maximumAge} and the average of the whole is ${average.toFixed(0)}`
+
+        $calculateButton.remove();
+        $announce.appendChild($br)
+        $announce.appendChild($reset)
     }
-   
-    $redo.onclick = function(){ 
-        if(!document.querySelector('#members-list') === false){ 
-            const $results = document.querySelector('#members-list')
+
+    $reset.onclick = function(){ 
+        if(true){ 
+            const $results = document.querySelector("#members-list")
             while ($results.firstChild) {
                 $results.removeChild($results.firstChild);
             }
