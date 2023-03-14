@@ -1,92 +1,115 @@
-document.querySelector("#quantity-submit").onclick = function(event){
+const $form = document.querySelector("#age-calculator");
 
-    const $membersNumber = document.querySelector("#members-quantity");
-    const $validation = document.querySelector("#quantity-validation");
-    const membersNumber = $membersNumber.value 
+$form["quantity-submit"].onclick = function () {
+  const existingMembers = $form.members;
+  if (!existingMembers) {
+    const membersQuantity = $form["members-quantity"].value;
+    validateMembersQuantity(membersQuantity);
+  }
 
-    if (membersNumber == 0){
-        $validation.innerText = 'Introduce valid numbers !'
-    } else if (!document.querySelector(".input-list")){      
-        createMembers(membersNumber);
-        createButtons();
-        $validation.remove();
-    }
-    return false
+  return false;
+};
+
+$form["calculate-button"].onclick = function () {
+  validateMemberAge();
+};
+
+$form["reset-form-button"].onclick = function () {
+  hideButtons();
+  removeMembers();
+  hideResults();
+};
+
+function createMembers(quantity) {
+  const $div = document.createElement("div");
+  $div.className = "created-members";
+  for (let i = 0; i < quantity; i++) {
+    const $label = document.createElement("label");
+    $label.innerText = `Family member number #${i + 1}`;
+
+    const $input = document.createElement("input");
+    $input.type = "number";
+    $input.name = "members";
+    $input.className = "";
+
+    const $error = document.createElement("strong");
+    $error.innerText = "";
+    $error.id = "error-" + [i + 1];
+
+    const $br = document.createElement("br");
+
+    $div.appendChild($label);
+    $div.appendChild($input);
+    $div.appendChild($error);
+    $div.appendChild($br);
+
+    const $membersList = document.querySelector("#members-list");
+    $membersList.appendChild($div);
+  }
 }
 
-function createMembers(quantity){
+function handleMembersErrors(errors) {
+  const keys = Object.keys(errors);
+  let membersErrorQuantity = 0;
+  const $errors = document.querySelector("#errors");
+  $errors.innerText = "";
 
-    for (let i = 0; i < quantity; i++){ 
-        const $div = document.createElement("div")
-
-        const $label = document.createElement("label")
-        $label.innerText = `Family member number #${i + 1}`
-
-        const $input = document.createElement("input")
-        $input.type = "number"
-        $input.className = "input-list"
-
-        $div.appendChild($label)
-        $div.appendChild($input)
-
-        const $membersNumber = document.querySelector("#members-list")
-        $membersNumber.appendChild($div) 
+  keys.forEach(function (key) {
+    const error = errors[key];
+    if (error) {
+      membersErrorQuantity++;
+      $form[key].className = "error";
+      const $error = document.createElement("li");
+      $error.innerText = error;
+      $errors.appendChild($error);
+    } else {
+      $form[key].className = "";
     }
+  });
+  return membersErrorQuantity;
 }
 
-function createButtons(){
-    const $div = document.querySelector("#members-list")
+function handleAgeErrors(errors) {
+  const keys = Object.keys(errors);
+  const $membersInput = document.querySelectorAll(".created-members input");
+  const $membersStrong = document.querySelectorAll(".created-members strong");
 
-    const $calculateButton = document.createElement("button")
-    $calculateButton.innerText = "Calculate"
-
-    const $reset = document.createElement("reset")
-
-    const $strong = document.createElement("strong")
-    $strong.id = "announce-results"
-
-    const $br = document.createElement("br")
-
-    $div.appendChild($calculateButton)
-    $div.appendChild($reset)
-    $div.appendChild($strong)
-
-    $calculateButton.onclick = function(){
-        const $list = document.querySelectorAll(".input-list")
-        const $announce = document.querySelector("#announce-results")
-        
-        let minimumAge = parseInt($list[0].value)
-        let maximumAge = parseInt($list[0].value)
-        let ageSum = 0
-        for (let i = 0; i < $list.length; i++){
-
-           let age = (parseInt($list[i].value))
-           if(isNaN(age)){
-               $announce.textContent = `Please introduce valid numbers for each member`
-               return false; 
-            }
-
-            if ( age > maximumAge){
-                maximumAge = age
-            } else if ( age < minimumAge){
-                minimumAge = age
-            }
-            ageSum += age
-        }
-        const average = ageSum / $list.length
-        $announce.textContent = `The minimun age in your family is ${minimumAge} the higher is ${maximumAge} and the average of the whole is ${average.toFixed(0)}`
-
-        $calculateButton.remove();
-        $announce.appendChild($br)
-        $announce.appendChild($reset)
+  let membersAgeError = 0;
+  keys.forEach(function (key) {
+    const input = errors[key];
+    for (key in input) {
+      if (input[key] !== "") {
+        membersAgeError++;
+        $membersInput[key].className = "error";
+        $membersStrong[key].innerText = input[key];
+      } else {
+        $membersInput[key].className = "";
+        $membersStrong[key].innerText = "";
+      }
     }
+  });
+  return membersAgeError;
+}
 
-    $reset.onclick = function(){ 
-        if(true){ 
-            const $results = document.querySelector("#members-list")
-            while ($results.firstChild) {
-                $results.removeChild($results.firstChild);
-            }
-        }
-    }
+function displayCalculatedResults($members) {
+  const $results = document.querySelector("#display-results");
+  $results.className = "";
+  $results.innerText = `The youngest member in your family is ${findMinimumNumber($members)} years old while the oldest is ${findMaximumNumber($members)} and the average age of the whole family is ${findAverageNumber($members)}`;
+}
+
+function displayButtons() {
+  document.querySelector("#buttons").className = "";
+}
+
+function hideButtons() {
+  document.querySelector("#buttons").className = "hidden";
+}
+
+function hideResults() {
+  document.querySelector("#display-results").className = "hidden";
+}
+
+function removeMembers() {
+  const $createdMembers = document.querySelector(".created-members");
+  $createdMembers.remove();
 }
