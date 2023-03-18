@@ -30,11 +30,11 @@ function findAverageNumber(number) {
   return parseFloat(average.toFixed(1));
 }
 
-function parseMembers(members) {
+function getMembers(members) {
   let validMembers = [];
   members.forEach((member) => {
-    const parsedMembers = parseInt(member.value);
-    validMembers.push(parsedMembers);
+    const number = Number(member.value);
+    validMembers.push(number);
   });
   return validMembers;
 }

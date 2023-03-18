@@ -11,7 +11,9 @@ $form["quantity-submit"].onclick = function () {
 };
 
 $form["calculate-button"].onclick = function () {
-  validateMemberAge();
+  const $members = document.querySelectorAll(".created-members input");
+  const members = getMembers($members);
+  validateMemberAge(members);
 };
 
 $form["reset-form-button"].onclick = function () {
@@ -48,7 +50,7 @@ function createMembers(quantity) {
   }
 }
 
-function handleMembersErrors(errors) {
+function handleMembersError(errors) {
   const keys = Object.keys(errors);
   let membersErrorQuantity = 0;
   const $errors = document.querySelector("#errors");
