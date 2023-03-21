@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>class-6-task-2-R/ARGENTINA-PROGRAMA</title>
+    <link rel="stylesheet" href="task-2.css" />
   </head>
   <body>
     <header>
@@ -9,14 +10,21 @@
       <h2>Click on the buttons to add or remove members</h2>
     </header>
     <form id="salary-calculator">
-      <input type="button" value="Add Member" id="button-add-member" />
-      <input type="button" value="Remove Member" id="button-remove-member" />
+      <input type="button" value="Add Member" name="button-add-member" />
+      <input type="button" value="Remove Member" name="button-remove-member" />
       <br />
       <div id="members"></div>
+      <button type="button" name="calculate-button" class="hidden">Calculate</button>
+      <div id="evaluate-results" class="hidden">
+        <p>The highest salary in your family is:<strong id="highest-salary"></strong></p>
+        <p>The lowest salary in your family is:<strong id="lowest-salary"></strong></p>
+        <p>The average salary in your family is:<strong id="average-salary"></strong></p>
+        <p>The monthly salary in a year is:<strong id="monthly-salary"></strong></p>
+      </div>
     </form>
 
-    <div id="calculate-button"><strong id="salary-results"></strong><br /></div>
     <script src="task-2.js"></script>
     <script src="task-2-calculations.js"></script>
+    <script src="task-2-validations.js"></script>
   </body>
 </html>

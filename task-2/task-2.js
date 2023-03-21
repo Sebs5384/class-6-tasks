@@ -1,18 +1,23 @@
 const $form = document.querySelector("#salary-calculator");
 
-document.querySelector("#button-add-member").onclick = function () {
+$form["button-add-member"].onclick = function () {
   createMember();
-  createCalculateButton();
+  displayCalculateButton();
 };
 
-document.querySelector("#button-remove-member").onclick = function () {
+$form["button-remove-member"].onclick = function () {
   removeMember();
 };
 
-document.querySelector("#calculate-button").onclick = function () {
-  const $salaries = $form.querySelectorAll(".input-list");
-  const salaries = getNumbers($salaries);
-  displaySalaryResults(salaries);
+$form["calculate-button"].onclick = function () {
+  const $members = $form.querySelectorAll(".input-list");
+  const numbers = getNumbers($members);
+  displaySalary("highest", findMaximumNumber(numbers));
+  displaySalary("lowest", findMinimumNumber(numbers));
+  displaySalary("average", findAverage(numbers));
+  displaySalary("monthly", findMonthlyAverage(numbers).toFixed(1));
+
+  displayResults();
 };
 
 function createMember() {
@@ -21,7 +26,7 @@ function createMember() {
   const $input = document.createElement("input");
   $input.className = "input-list";
   $input.type = "number";
-  $input.name = `member-${number}`;
+  $input.id = `member-${number}`;
   $input.placeholder = `Entry member-${number} salary`;
 
   const $br = document.createElement("br");
@@ -31,10 +36,10 @@ function createMember() {
   $label.innerText = `Family member #${number}`;
   $label.id = `label-${number}`;
 
-  const $member = document.querySelector("#members");
-  $member.appendChild($label);
-  $member.appendChild($input);
-  $member.appendChild($br);
+  const $members = document.querySelector("#members");
+  $members.appendChild($label);
+  $members.appendChild($input);
+  $members.appendChild($br);
 }
 
 function removeMember() {
@@ -49,27 +54,26 @@ function removeMember() {
   $br.remove();
 
   if (number === 1) {
-    removeCalculateButton();
+    hideCalculateButton();
   }
 }
 
-function removeCalculateButton() {
-  const $calculateButton = document.querySelector("#calculate-salary-button");
-  $calculateButton.remove();
+function displaySalary(rate, value) {
+  $form.querySelector(`#${rate}-salary`).innerText = value;
 }
 
-function createCalculateButton() {
-  if (!document.querySelector("#calculate-salary-button")) {
-    const $calculateButton = document.createElement("button");
-    $calculateButton.innerText = "Calculate";
-    $calculateButton.id = "calculate-salary-button";
-
-    const $button = document.querySelector("#calculate-button");
-    $button.appendChild($calculateButton);
-  }
+function hideResults() {
+  $form.querySelector("#evaluate-results").className = "hidden";
 }
 
-function displaySalaryResults(salary) {
-  const $results = document.querySelector("#salary-results");
-  $results.innerText = `The highest salary is ${findMaximumNumber(salary)}, the lowest is ${findMinimumNumber(salary)} the average is ${findAverage(salary).toFixed(1)} and the monthly average is ${findMonthlyAverage(salary).toFixed(1)}`;
+function displayResults() {
+  $form.querySelector("#evaluate-results").className = "";
+}
+
+function hideCalculateButton() {
+  $form["calculate-button"].className = "hidden";
+}
+
+function displayCalculateButton() {
+  $form["calculate-button"].className = "";
 }
