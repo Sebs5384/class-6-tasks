@@ -10,23 +10,17 @@ $form["button-remove-member"].onclick = function () {
 };
 
 $form["calculate-button"].onclick = function () {
-  const $members = $form.querySelectorAll(".input-list");
-  const numbers = getNumbers($members);
-  displaySalary("highest", findMaximumNumber(numbers));
-  displaySalary("lowest", findMinimumNumber(numbers));
-  displaySalary("average", findAverage(numbers));
-  displaySalary("monthly", findMonthlyAverage(numbers).toFixed(1));
-
-  displayResults();
+  validateMemberSalary();
 };
 
 function createMember() {
-  const $memberList = document.querySelectorAll(".input-list");
+  const $memberList = document.querySelectorAll(".created-members input");
   let number = $memberList.length + 1;
   const $input = document.createElement("input");
-  $input.className = "input-list";
   $input.type = "number";
   $input.id = `member-${number}`;
+  $input.name = "members";
+  $input.className = "";
   $input.placeholder = `Entry member-${number} salary`;
 
   const $br = document.createElement("br");
@@ -36,26 +30,60 @@ function createMember() {
   $label.innerText = `Family member #${number}`;
   $label.id = `label-${number}`;
 
+  const $strong = document.createElement("strong");
+  $strong.innerText = "";
+  $strong.id = `strong-${number}`;
+  $strong.className = "";
+
   const $members = document.querySelector("#members");
   $members.appendChild($label);
   $members.appendChild($input);
+  $members.appendChild($strong);
   $members.appendChild($br);
 }
 
 function removeMember() {
-  const $memberList = document.querySelectorAll(".input-list");
+  const $errorMessage = document.querySelector("#display-error-message");
+  const $memberList = document.querySelectorAll(".created-members input");
   let number = $memberList.length;
-  const $member = document.querySelector(`#member-${number}`);
-  const $br = document.querySelector(`#br-${number}`);
-  const $label = document.querySelector(`#label-${number}`);
+  const $member = $form.querySelector(`#member-${number}`);
+  const $br = $form.querySelector(`#br-${number}`);
+  const $label = $form.querySelector(`#label-${number}`);
+  const $strong = $form.querySelector(`#strong-${number}`);
 
-  $label.remove();
   $member.remove();
   $br.remove();
-
+  $label.remove();
+  $strong.remove();
+  validateMemberSalary();
   if (number === 1) {
     hideCalculateButton();
+    hideResults();
+    $errorMessage.innerText = "";
   }
+}
+
+function handleSalaryError(errors) {
+  const keys = Object.keys(errors);
+  const $membersInput = $form.querySelectorAll(".created-members input");
+  const $membersStrong = $form.querySelectorAll(".created-members strong");
+  const $errorMessage = $form.querySelector("#display-error-message");
+  let salaryError = 0;
+  keys.forEach(function (key) {
+    const input = errors[key];
+    for (key in input) {
+      if (input[key] !== "") {
+        salaryError++;
+        $membersInput[key].className = "error";
+        $membersStrong[key].innerText = input[key];
+      } else {
+        $membersInput[key].className = "";
+        $membersStrong[key].innerText = "";
+        $errorMessage.innerText = "";
+      }
+    }
+  });
+  return salaryError;
 }
 
 function displaySalary(rate, value) {
