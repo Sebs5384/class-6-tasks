@@ -2,7 +2,9 @@ function validateMembersSalary(members) {
   const errorObject = {};
   members.forEach((member, i) => {
     if (member <= 0) {
-      errorObject[i] = "This field cannot have a value of 0";
+      errorObject[i] = "This field cannot have a value of 0 or be empty";
+    } else if (member % 1 !== 0) {
+      errorObject[i] = "This field cannot have decimal values";
     } else if (!/^[1-9][0-9]*$/.test(member)) {
       errorObject[i] = "This field should only contain numbers";
     } else if (!/^.{1,7}$/.test(member)) {
@@ -19,6 +21,7 @@ function validateMemberSalary() {
   const $salary = getNumbers($members);
   const membersSalaryError = validateMembersSalary($salary);
   const $errorMessage = document.querySelector("#display-error-message");
+
   const salaryError = {
     members: membersSalaryError,
   };
@@ -27,7 +30,7 @@ function validateMemberSalary() {
   if (isSuccessful) {
     displaySalary("highest", findMaximumNumber($salary));
     displaySalary("lowest", findMinimumNumber($salary));
-    displaySalary("average", findAverage($salary).toFixed(1));
+    displaySalary("average", findAverageNumber($salary).toFixed(1));
     displaySalary("monthly", findMonthlyAverage($salary).toFixed(1));
 
     displayResults();

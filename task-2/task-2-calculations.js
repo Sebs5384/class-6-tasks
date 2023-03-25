@@ -20,18 +20,18 @@ function findMinimumNumber(numbers) {
   return minimumNumber;
 }
 
-function findAverage(numbers) {
+function findAverageNumber(numbers) {
   let totalNumbers = 0;
   numbers.forEach((number) => {
     let $number = number;
     totalNumbers += $number;
   });
   const average = totalNumbers / numbers.length;
-  return average;
+  return parseFloat(average.toFixed(1));
 }
 
 function findMonthlyAverage(numbers) {
-  const average = findAverage(numbers);
+  const average = findAverageNumber(numbers);
   return average / 12;
 }
 

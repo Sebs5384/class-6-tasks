@@ -56,6 +56,7 @@ function removeMember() {
   $label.remove();
   $strong.remove();
   validateMemberSalary();
+
   if (number === 1) {
     hideCalculateButton();
     hideResults();
