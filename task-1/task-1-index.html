@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Clase 6 - Tarea 1</title>
+    <link rel="stylesheet" href="task-1.css" />
+  </head>
+
+  <body>
+    <form id="age-calculator">
+      <header id="family-header">¿How many members does your family have?</header>
+      <br />
+      <input type="number" placeholder="Entry members" name="members-quantity" />
+      <input type="submit" name="quantity-submit" value="Submit" />
+      <input type="reset" value="Reset" id="reset-button" /><br /><br />
+
+      <div id="members-list"></div>
+      <div id="buttons" class="hidden">
+        <input type="button" name="calculate-button" value="Calculate" />
+        <input type="reset" name="reset-form-button" value="Reset" />
+      </div>
+      <p id="display-results"></p>
+      <strong id="errors"></strong>
+    </form>
+
+    <script src="task-1-validations.js"></script>
+    <script src="task-1.js"></script>
+    <script src="calculations.js"></script>
+    <script src="task-1-test.js"></script>
+  </body>
+</html>
