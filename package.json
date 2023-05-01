@@ -1,0 +1,18 @@
+{
+  "name": "class-6-task",
+  "description": "class-6 for r/argentina-programa",
+  "version": "1.0.0",
+  "main": "task-1-index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/Sebs5384/class-6-tasks.git)"
+  },
+  "author": "5384",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
+}
