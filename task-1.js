@@ -1,4 +1,4 @@
-const $form = document.querySelector("#age-calculator");
+const $form = document.querySelector("#form");
 
 $form["quantity-submit"].onclick = function () {
   const existingMembers = $form.members;
@@ -25,6 +25,7 @@ $form["reset-form-button"].onclick = function () {
 function createMembers(quantity) {
   const $div = document.createElement("div");
   $div.className = "created-members";
+  
   for (let i = 0; i < quantity; i++) {
     const $label = document.createElement("label");
     $label.innerText = `Family member number #${i + 1}`;
@@ -65,7 +66,7 @@ function handleMembersError(errors) {
       $error.innerText = error;
       $errors.appendChild($error);
     } else {
-      $form[key].className = "";
+      $form[key].className = "form-control";
     }
   });
   return membersErrorQuantity;
