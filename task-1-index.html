@@ -23,30 +23,36 @@
       <strong id="errors"></strong>
     </form>
 
-    <form id="form" class="row justify-content-center">
-      <div class="alert alert-primary col-auto">
-        <div class="row justify-content-center">
-          <h6 class="col-auto">Welcome dear user</h6>
-        </div>
-        <div class="row justify-content-center">
-          <h6 class="col-auto">This is a small program which calculates your family members age !</h6>
-        </div>
-        <div class="row justify-content-center">
-          <h6 class="col-auto">Just entry the number of members on the field below to begin</h6>
-        </div>
-      </div>
+    <div class="row justify-content-center">
+      <div class="card" style="width: 40rem">
+        <div class="card-body">
+          <form id="form">
+            <div class="alert alert-primary col-auto">
+              <div class="row justify-content-center">
+                <h6 class="col-auto">Welcome dear user</h6>
+              </div>
+              <div class="row justify-content-center">
+                <small class="col-auto">This is a small program that calculates your family oldest, youngest and average age !</small>
+              </div>
+              <div class="row justify-content-center">
+                <small class="col-auto">Entry the number of members your family have to begin</small>
+              </div>
+            </div>
 
-      <div class="row justify-content-center">
-        <div class="form-floating col-auto">
-          <input type="number" class="form-control" name="members-quantity" placeholder="entryMembers" />
-          <label class="form-label text-center">E.g 12 </label><br />
-        </div>
-        <div class="btn-toolbar gap-2 justify-content-center">
-          <button type="button" class="btn btn-primary" name="quantity-submit">Submit</button>
-          <button type="button" class="btn btn-primary" id="reset-button">Reset</button>
+            <div class="row justify-content-center">
+              <div class="form-floating col-auto">
+                <input type="number" class="form-control" name="members-quantity" placeholder="entryMembers" />
+                <label class="form-label text-center">E.g 20</label><br />
+              </div>
+              <div class="btn-toolbar gap-2 justify-content-center">
+                <button type="button" class="btn btn-primary" name="quantity-submit">Submit</button>
+                <button type="button" class="btn btn-primary" id="reset-button">Reset</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    </form>
+    </div>
 
     <script src="task-1-validations.js"></script>
     <script src="task-1.js"></script>
