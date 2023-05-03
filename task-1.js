@@ -25,7 +25,7 @@ $form["reset-form-button"].onclick = function () {
 function createMembers(quantity) {
   const $div = document.createElement("div");
   $div.className = "created-members";
-  
+
   for (let i = 0; i < quantity; i++) {
     const $label = document.createElement("label");
     $label.innerText = `Family member number #${i + 1}`;
@@ -61,7 +61,7 @@ function handleMembersError(errors) {
     const error = errors[key];
     if (error) {
       membersErrorQuantity++;
-      $form[key].className = "error";
+      $form[key].className = "form-control error";
       const $error = document.createElement("li");
       $error.innerText = error;
       $errors.appendChild($error);
