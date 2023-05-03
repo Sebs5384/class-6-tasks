@@ -23,17 +23,22 @@ $form["reset-form-button"].onclick = function () {
 };
 
 function createMembers(quantity) {
-  const $div = document.createElement("div");
-  $div.className = "created-members";
+  const $container = document.createElement("div");
+  $container.className = "created-members row justify-content-center";
 
   for (let i = 0; i < quantity; i++) {
-    const $label = document.createElement("label");
-    $label.innerText = `Family member number #${i + 1}`;
+    const $div = document.createElement("div");
+    $div.className = "form-floating col-5";
 
     const $input = document.createElement("input");
     $input.type = "number";
     $input.name = "members";
-    $input.className = "";
+    $input.className = "form-control";
+    $input.placeholder = "members";
+
+    const $label = document.createElement("label");
+    $label.innerText = `Family member number #${i + 1}`;
+    $label.className = "form-label text-center";
 
     const $error = document.createElement("strong");
     $error.innerText = "";
@@ -41,13 +46,13 @@ function createMembers(quantity) {
 
     const $br = document.createElement("br");
 
-    $div.appendChild($label);
     $div.appendChild($input);
+    $div.appendChild($label);
     $div.appendChild($error);
     $div.appendChild($br);
-
-    const $membersList = document.querySelector("#members-list");
-    $membersList.appendChild($div);
+    $container.appendChild($div);
+    const $membersList = document.querySelector("#member-list");
+    $membersList.appendChild($container);
   }
 }
 
