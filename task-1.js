@@ -28,7 +28,7 @@ function createMembers(quantity) {
 
   for (let i = 0; i < quantity; i++) {
     const $div = document.createElement("div");
-    $div.className = "form-floating col-5";
+    $div.className = "form-floating col-6";
 
     const $input = document.createElement("input");
     $input.type = "number";
@@ -40,8 +40,9 @@ function createMembers(quantity) {
     $label.innerText = `Family member number #${i + 1}`;
     $label.className = "form-label text-center";
 
-    const $error = document.createElement("strong");
+    const $error = document.createElement("small");
     $error.innerText = "";
+    $error.style = "font-size: 10px";
     $error.id = "error-" + [i + 1];
 
     const $br = document.createElement("br");
@@ -59,7 +60,7 @@ function createMembers(quantity) {
 function handleMembersError(errors) {
   const keys = Object.keys(errors);
   let membersErrorQuantity = 0;
-  const $errors = document.querySelector("#errors");
+  const $errors = document.querySelector("#error");
   $errors.innerText = "";
 
   keys.forEach(function (key) {
@@ -80,7 +81,7 @@ function handleMembersError(errors) {
 function handleAgeErrors(errors) {
   const keys = Object.keys(errors);
   const $membersInput = document.querySelectorAll(".created-members input");
-  const $membersStrong = document.querySelectorAll(".created-members strong");
+  const $membersStrong = document.querySelectorAll(".created-members small");
 
   let membersAgeError = 0;
   keys.forEach(function (key) {
@@ -88,10 +89,10 @@ function handleAgeErrors(errors) {
     for (key in input) {
       if (input[key] !== "") {
         membersAgeError++;
-        $membersInput[key].className = "error";
+        $membersInput[key].className = "form-control error";
         $membersStrong[key].innerText = input[key];
       } else {
-        $membersInput[key].className = "";
+        $membersInput[key].className = "form-control";
         $membersStrong[key].innerText = "";
       }
     }
