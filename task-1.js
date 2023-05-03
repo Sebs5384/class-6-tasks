@@ -16,10 +16,10 @@ $form["calculate-button"].onclick = function () {
   validateMemberAge(members);
 };
 
-$form["reset-form-button"].onclick = function () {
-  hideButtons();
+$form["restart-form-button"].onclick = function () {
+  hideElements("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center hidden");
+  hideElements("#display-results", "className", "hidden");
   removeMembers();
-  hideResults();
 };
 
 function createMembers(quantity) {
@@ -105,16 +105,12 @@ function displayCalculatedResults($members) {
   $results.innerText = `The youngest member in your family is ${findMinimumNumber($members)} years old while the oldest is ${findMaximumNumber($members)} and the average age of the whole family is ${findAverageNumber($members)}`;
 }
 
-function displayButtons() {
-  document.querySelector("#buttons").className = "";
+function displayElements(selector, property, value) {
+  document.querySelector(`${selector}`)[`${property}`] = value;
 }
 
-function hideButtons() {
-  document.querySelector("#buttons").className = "hidden";
-}
-
-function hideResults() {
-  document.querySelector("#display-results").className = "hidden";
+function hideElements(selector, property, value) {
+  document.querySelector(`${selector}`)[`${property}`] = value;
 }
 
 function removeMembers() {

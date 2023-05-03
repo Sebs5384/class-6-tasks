@@ -52,7 +52,7 @@ function validateMembersQuantity(membersQuantity) {
   const isSuccessful = handleMembersError(quantityError) === 0;
   if (isSuccessful) {
     createMembers(membersQuantity);
-    displayButtons();
+    displayElements("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center");
   }
   return false;
 }
