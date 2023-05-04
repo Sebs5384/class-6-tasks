@@ -5,8 +5,8 @@ $form["quantity-submit"].onclick = function () {
   const membersQuantity = $form["members-quantity"].value;
   const nextStep = {
     0: "The next step is to",
-    1: "Fill the fields below in order to calculate",
-    2: "The eldest, youngest and average in your family",
+    1: "fill the fields below in order to calculate",
+    2: "the eldest, youngest and average in your family",
   };
 
   if (!existingMembers) {
@@ -27,7 +27,7 @@ $form["calculate-button"].onclick = function () {
 $form["restart-form-button"].onclick = function () {
   hideElements("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center hidden");
   displayElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
-  removeElement(".created-members");
+  removeElements(".created-members", { 0: "" });
 };
 
 function createMembers(quantity) {
@@ -124,16 +124,12 @@ function hideElements(selector, property, value) {
   document.querySelector(selector)[property] = value;
 }
 
-function removeElement(selector, elements = "") {
-  if (elements !== "") {
-    const $elements = document.querySelectorAll(`${selector}`);
-    $elements.forEach((element) => {
-      element.remove();
-    });
-  } else {
-    const $element = document.querySelector(`${selector}`);
-    $element.remove();
-  }
+function removeElements(selector, elements) {
+  const $elements = document.querySelectorAll(selector);
+  const indices = Object.keys(elements);
+  indices.forEach((index) => {
+    $elements[index].remove();
+  });
 }
 
 function updateElementText(selector, texts) {
