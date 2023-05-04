@@ -2,9 +2,16 @@ const $form = document.querySelector("#form");
 
 $form["quantity-submit"].onclick = function () {
   const existingMembers = $form.members;
+  const membersQuantity = $form["members-quantity"].value;
+  const nextStep = {
+    0: "The next step is to",
+    1: "Fill the fields below in order to calculate",
+    2: "The eldest, youngest and average in your family",
+  };
+
   if (!existingMembers) {
-    const membersQuantity = $form["members-quantity"].value;
     hideElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center hidden");
+    updateElementText("#age-calculator-instructions div small", nextStep);
     validateMembersQuantity(membersQuantity);
   }
 
@@ -53,6 +60,7 @@ function createMembers(quantity) {
     $div.appendChild($error);
     $div.appendChild($br);
     $container.appendChild($div);
+
     const $membersList = document.querySelector("#member-list");
     $membersList.appendChild($container);
   }
@@ -102,7 +110,7 @@ function handleAgeErrors(errors) {
   return membersAgeError;
 }
 
-function displayCalculatedResults($members) {
+function displayCalculationResults($members) {
   const $results = document.querySelector("#calculation-results");
   $results.className = "";
   $results.innerText = `The youngest member in your family is ${findMinimumNumber($members)} years old while the oldest is ${findMaximumNumber($members)} and the average age of the whole family is ${findAverageNumber($members)}`;
@@ -113,7 +121,7 @@ function displayElements(selector, property, value) {
 }
 
 function hideElements(selector, property, value) {
-  document.querySelector(`${selector}`)[`${property}`] = value;
+  document.querySelector(selector)[property] = value;
 }
 
 function removeElement(selector, elements = "") {
@@ -126,4 +134,12 @@ function removeElement(selector, elements = "") {
     const $element = document.querySelector(`${selector}`);
     $element.remove();
   }
+}
+
+function updateElementText(selector, texts) {
+  const $selectedElement = document.querySelectorAll(selector);
+  const indices = Object.keys(texts);
+  indices.forEach((index) => {
+    $selectedElement[index].innerText = texts[index];
+  });
 }

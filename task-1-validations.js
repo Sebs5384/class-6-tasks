@@ -65,6 +65,6 @@ function validateMemberAge(membersAge) {
   };
   const isSuccessful = handleAgeErrors(ageError) === 0;
   if (isSuccessful) {
-    displayCalculatedResults(membersAge);
+    displayCalculationResults(membersAge);
   }
 }
