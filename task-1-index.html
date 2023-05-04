@@ -11,9 +11,9 @@
       <div class="card" style="width: 40rem">
         <div class="card-body">
           <form id="form">
-            <div class="alert alert-primary col-auto">
+            <div class="alert alert-primary col-auto" id="test">
               <div class="row justify-content-center">
-                <h6 class="col-auto">Welcome dear user</h6>
+                <small class="col-auto"><h6>Welcome dear user</h6></small>
               </div>
               <div class="row justify-content-center">
                 <small class="col-auto">This is a small program that calculates your family oldest, youngest and average age !</small>
@@ -31,8 +31,9 @@
                 <input type="number" class="form-control" name="members-quantity" placeholder="quantity" />
                 <label class="form-label text-center">E.g 20</label><br />
               </div>
-              <div class="row justify-content-center"><strong id="error" class="col-auto"></strong></div>
-              <br />
+              <div class="row justify-content-center">
+                <strong id="error" class="col-auto"><br /></strong>
+              </div>
               <div class="btn-toolbar gap-2 justify-content-center" id="form-submit-buttons">
                 <button type="button" class="btn btn-primary" name="quantity-submit">Submit</button>
                 <button type="reset" class="btn btn-primary" id="reset-button">Reset</button>
