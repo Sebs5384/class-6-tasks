@@ -4,6 +4,7 @@ $form["quantity-submit"].onclick = function () {
   const existingMembers = $form.members;
   if (!existingMembers) {
     const membersQuantity = $form["members-quantity"].value;
+    hideElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center hidden");
     validateMembersQuantity(membersQuantity);
   }
 
@@ -18,8 +19,8 @@ $form["calculate-button"].onclick = function () {
 
 $form["restart-form-button"].onclick = function () {
   hideElements("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center hidden");
-  hideElements("#display-results", "className", "hidden");
-  removeMembers();
+  displayElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
+  removeElement(".created-members");
 };
 
 function createMembers(quantity) {
@@ -71,6 +72,7 @@ function handleMembersError(errors) {
       const $error = document.createElement("li");
       $error.innerText = error;
       $errors.appendChild($error);
+      displayElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
     } else {
       $form[key].className = "form-control";
     }
@@ -101,7 +103,7 @@ function handleAgeErrors(errors) {
 }
 
 function displayCalculatedResults($members) {
-  const $results = document.querySelector("#display-results");
+  const $results = document.querySelector("#calculation-results");
   $results.className = "";
   $results.innerText = `The youngest member in your family is ${findMinimumNumber($members)} years old while the oldest is ${findMaximumNumber($members)} and the average age of the whole family is ${findAverageNumber($members)}`;
 }
@@ -114,7 +116,14 @@ function hideElements(selector, property, value) {
   document.querySelector(`${selector}`)[`${property}`] = value;
 }
 
-function removeMembers() {
-  const $createdMembers = document.querySelector(".created-members");
-  $createdMembers.remove();
+function removeElement(selector, elements = "") {
+  if (elements !== "") {
+    const $elements = document.querySelectorAll(`${selector}`);
+    $elements.forEach((element) => {
+      element.remove();
+    });
+  } else {
+    const $element = document.querySelector(`${selector}`);
+    $element.remove();
+  }
 }
