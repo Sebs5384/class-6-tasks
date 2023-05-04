@@ -8,12 +8,9 @@ $form["quantity-submit"].onclick = function () {
     1: "fill the fields below in order to calculate",
     2: "the eldest, youngest and average in your family",
   };
-
-  if (!existingMembers) {
-    hideElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center hidden");
-    updateElementText("#age-calculator-instructions div small", nextStep);
-    validateMembersQuantity(membersQuantity);
-  }
+  hideElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center hidden");
+  updateElementText("#age-calculator-instructions div small", nextStep);
+  validateMembersQuantity(membersQuantity);
 
   return false;
 };
