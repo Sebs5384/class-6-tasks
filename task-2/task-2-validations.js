@@ -18,8 +18,8 @@ function validateMembersSalary(members) {
 
 function validateMemberSalary() {
   const $members = $form.querySelectorAll(".created-members input");
-  const $salary = getNumbers($members);
-  const membersSalaryError = validateMembersSalary($salary);
+  const salary = getNumbers($members);
+  const membersSalaryError = validateMembersSalary(salary);
   const $errorMessage = document.querySelector("#display-error-message");
 
   const salaryError = {
@@ -28,12 +28,7 @@ function validateMemberSalary() {
 
   const isSuccessful = handleSalaryError(salaryError) === 0;
   if (isSuccessful) {
-    displaySalary("highest", findMaximumNumber($salary));
-    displaySalary("lowest", findMinimumNumber($salary));
-    displaySalary("average", findAverageNumber($salary).toFixed(1));
-    displaySalary("monthly", findMonthlyAverage($salary).toFixed(1));
-
-    displayResults();
+    displaySalaryResults(salary);
   } else {
     const $errorList = $form.members;
     const errors = [];
