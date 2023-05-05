@@ -75,6 +75,7 @@ function handleMembersError(errors) {
       $form[key].className = "form-control error";
       const $error = document.createElement("li");
       $error.innerText = error;
+      $error.className = "alert alert-danger";
       $errors.appendChild($error);
       displayElement("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
     } else {
@@ -87,7 +88,7 @@ function handleMembersError(errors) {
 function handleAgeErrors(errors) {
   const keys = Object.keys(errors);
   const $membersInput = document.querySelectorAll(".created-members input");
-  const $membersStrong = document.querySelectorAll(".created-members small");
+  const $membersSmall = document.querySelectorAll(".created-members small");
 
   let membersAgeError = 0;
   keys.forEach(function (key) {
@@ -96,10 +97,10 @@ function handleAgeErrors(errors) {
       if (input[key] !== "") {
         membersAgeError++;
         $membersInput[key].className = "form-control error";
-        $membersStrong[key].innerText = input[key];
+        $membersSmall[key].innerText = input[key];
       } else {
         $membersInput[key].className = "form-control";
-        $membersStrong[key].innerText = "";
+        $membersSmall[key].innerText = "";
       }
     }
   });
