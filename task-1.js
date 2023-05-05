@@ -1,15 +1,7 @@
 const $form = document.querySelector("#form");
 
 $form["quantity-submit"].onclick = function () {
-  const existingMembers = $form.members;
   const membersQuantity = $form["members-quantity"].value;
-  const nextStep = {
-    0: "The next step is to",
-    1: "fill the fields below in order to calculate",
-    2: "the eldest, youngest and average in your family",
-  };
-  hideElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center hidden");
-  updateElementText("#age-calculator-instructions div small", nextStep);
   validateMembersQuantity(membersQuantity);
 
   return false;
@@ -22,9 +14,16 @@ $form["calculate-button"].onclick = function () {
 };
 
 $form["restart-form-button"].onclick = function () {
-  hideElements("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center hidden");
-  displayElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
+  const defaultMessage = {
+    0: "Welcome dear user",
+    1: "This is a small program that calculates your family oldest, youngest and average age !",
+    2: "Entry the number of members your family have to begin",
+  };
+
+  hideElement("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center hidden");
+  displayElement("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
   removeElements(".created-members", { 0: "" });
+  updateElementText("#age-calculator-instructions div small", defaultMessage);
 };
 
 function createMembers(quantity) {
@@ -77,7 +76,7 @@ function handleMembersError(errors) {
       const $error = document.createElement("li");
       $error.innerText = error;
       $errors.appendChild($error);
-      displayElements("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
+      displayElement("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
     } else {
       $form[key].className = "form-control";
     }
@@ -107,18 +106,12 @@ function handleAgeErrors(errors) {
   return membersAgeError;
 }
 
-function displayCalculationResults($members) {
-  const $results = document.querySelector("#calculation-results");
-  $results.className = "";
-  $results.innerText = `The youngest member in your family is ${findMinimumNumber($members)} years old while the oldest is ${findMaximumNumber($members)} and the average age of the whole family is ${findAverageNumber($members)}`;
+function displayElement(selector, attribute, value) {
+  document.querySelector(selector)[attribute] = value;
 }
 
-function displayElements(selector, property, value) {
-  document.querySelector(`${selector}`)[`${property}`] = value;
-}
-
-function hideElements(selector, property, value) {
-  document.querySelector(selector)[property] = value;
+function hideElement(selector, attribute, value) {
+  document.querySelector(selector)[attribute] = value;
 }
 
 function removeElements(selector, elements) {
