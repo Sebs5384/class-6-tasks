@@ -3,10 +3,14 @@ const $form = document.querySelector("#salary-calculator");
 $form["button-add-member"].onclick = function () {
   createMember();
   displayCalculateButton();
+
+  return false;
 };
 
 $form["button-remove-member"].onclick = function () {
   removeMember();
+
+  return false;
 };
 
 $form["calculate-button"].onclick = function () {
@@ -14,47 +18,49 @@ $form["calculate-button"].onclick = function () {
 };
 
 function createMember() {
-  const $memberList = document.querySelectorAll(".created-members input");
+  const $memberList = document.querySelectorAll("#member-list input");
   let number = $memberList.length + 1;
+
+  const $div = document.createElement("div");
+  $div.className = "form-floating col-4 gy-4";
+
   const $input = document.createElement("input");
   $input.type = "number";
   $input.id = `member-${number}`;
   $input.name = "members";
-  $input.className = "";
-  $input.placeholder = `Entry member-${number} salary`;
-
-  const $br = document.createElement("br");
-  $br.id = `br-${number}`;
+  $input.className = "form-control";
+  $input.placeholder = "member";
 
   const $label = document.createElement("label");
-  $label.innerText = `Family member #${number}`;
+  $label.innerText = `Member #${number}`;
   $label.id = `label-${number}`;
+  $label.className = "form-label text-center";
 
   const $strong = document.createElement("strong");
   $strong.innerText = "";
   $strong.id = `strong-${number}`;
   $strong.className = "";
 
-  const $members = document.querySelector("#members");
-  $members.appendChild($label);
-  $members.appendChild($input);
-  $members.appendChild($strong);
-  $members.appendChild($br);
+  $div.appendChild($input);
+  $div.appendChild($label);
+  $div.appendChild($strong);
+
+  const $members = document.querySelector("#member-list");
+  $members.appendChild($div);
 }
 
 function removeMember() {
   const $errorMessage = document.querySelector("#display-error-message");
-  const $memberList = document.querySelectorAll(".created-members input");
+  const $memberList = document.querySelectorAll("#member-list input");
   let number = $memberList.length;
   const $member = $form.querySelector(`#member-${number}`);
-  const $br = $form.querySelector(`#br-${number}`);
   const $label = $form.querySelector(`#label-${number}`);
   const $strong = $form.querySelector(`#strong-${number}`);
 
   $member.remove();
-  $br.remove();
   $label.remove();
   $strong.remove();
+
   validateMemberSalary();
 
   if (number === 1) {
@@ -95,8 +101,12 @@ function hideResults() {
   $form.querySelector("#evaluate-results").className = "hidden";
 }
 
-function displayResults() {
+function displaySalaryResults(salary) {
   $form.querySelector("#evaluate-results").className = "";
+  displaySalary("highest", findMaximumNumber(salary));
+  displaySalary("lowest", findMinimumNumber(salary));
+  displaySalary("average", findAverageNumber(salary).toFixed(1));
+  displaySalary("monthly", findMonthlyAverage(salary).toFixed(1));
 }
 
 function hideCalculateButton() {
