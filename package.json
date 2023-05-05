@@ -1,0 +1,18 @@
+{
+  "name": "class-6-task-1-bootstrap",
+  "version": "1.0.0",
+  "description": "Adding bootstrap styles to the task-1 of class-6 r/argentina-programa",
+  "main": "task-1-index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Sebs5384/class-6-tasks"
+  },
+  "author": "5384",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
+}
