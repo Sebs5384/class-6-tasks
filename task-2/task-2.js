@@ -15,6 +15,8 @@ $form["button-remove-member"].onclick = function () {
 
 $form["calculate-button"].onclick = function () {
   validateMemberSalary();
+
+  return false;
 };
 
 function createMember() {
@@ -61,8 +63,6 @@ function removeMember() {
   $label.remove();
   $strong.remove();
 
-  validateMemberSalary();
-
   if (number === 1) {
     hideCalculateButton();
     hideResults();
@@ -72,19 +72,20 @@ function removeMember() {
 
 function handleSalaryError(errors) {
   const keys = Object.keys(errors);
-  const $membersInput = $form.querySelectorAll(".created-members input");
-  const $membersStrong = $form.querySelectorAll(".created-members strong");
+  const $membersInput = $form.querySelectorAll("#member-list input");
+  const $membersStrong = $form.querySelectorAll("#member-list strong");
   const $errorMessage = $form.querySelector("#display-error-message");
   let salaryError = 0;
+
   keys.forEach(function (key) {
     const input = errors[key];
     for (key in input) {
       if (input[key] !== "") {
         salaryError++;
-        $membersInput[key].className = "error";
+        $membersInput[key].className = "form-control error";
         $membersStrong[key].innerText = input[key];
       } else {
-        $membersInput[key].className = "";
+        $membersInput[key].className = "form-control";
         $membersStrong[key].innerText = "";
         $errorMessage.innerText = "";
       }
@@ -98,11 +99,11 @@ function displaySalary(rate, value) {
 }
 
 function hideResults() {
-  $form.querySelector("#evaluate-results").className = "hidden";
+  $form.querySelector("#salary-results").className = "hidden";
 }
 
 function displaySalaryResults(salary) {
-  $form.querySelector("#evaluate-results").className = "";
+  $form.querySelector("#salary-results").className = "col-10 gy-2 alert alert-primary";
   displaySalary("highest", findMaximumNumber(salary));
   displaySalary("lowest", findMinimumNumber(salary));
   displaySalary("average", findAverageNumber(salary).toFixed(1));
@@ -114,5 +115,5 @@ function hideCalculateButton() {
 }
 
 function displayCalculateButton() {
-  $form["calculate-button"].className = "";
+  $form["calculate-button"].className = "btn btn-primary gy-2 col-auto";
 }
