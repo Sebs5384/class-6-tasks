@@ -39,14 +39,14 @@ function createMember() {
   $label.id = `label-${number}`;
   $label.className = "form-label text-center";
 
-  const $strong = document.createElement("strong");
-  $strong.innerText = "";
-  $strong.id = `strong-${number}`;
-  $strong.className = "";
+  const $small = document.createElement("small");
+  $small.innerText = "";
+  $small.className = "";
+  $small.style = "font-size: 10px";
 
   $container.appendChild($input);
   $container.appendChild($label);
-  $container.appendChild($strong);
+  $container.appendChild($small);
 
   const $members = document.querySelector("#member-list");
   $members.appendChild($container);
@@ -67,8 +67,7 @@ function removeMember() {
 function handleSalaryError(errors) {
   const keys = Object.keys(errors);
   const $membersInput = $form.querySelectorAll("#member-list input");
-  const $membersStrong = $form.querySelectorAll("#member-list strong");
-  const $errorMessage = $form.querySelector("#display-error-message");
+  const $membersSmall = $form.querySelectorAll("#member-list small");
   let salaryError = 0;
 
   keys.forEach(function (key) {
@@ -77,11 +76,10 @@ function handleSalaryError(errors) {
       if (input[key] !== "") {
         salaryError++;
         $membersInput[key].className = "form-control error";
-        $membersStrong[key].innerText = input[key];
+        $membersSmall[key].innerText = input[key];
       } else {
         $membersInput[key].className = "form-control";
-        $membersStrong[key].innerText = "";
-        $errorMessage.innerText = "";
+        $membersSmall[key].innerText = "";
       }
     }
   });
