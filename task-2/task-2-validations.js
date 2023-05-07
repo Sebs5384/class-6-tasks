@@ -17,7 +17,7 @@ function validateMembersSalary(members) {
 }
 
 function validateMemberSalary() {
-  const $members = $form.querySelectorAll(".created-members input");
+  const $members = $form.querySelectorAll("#member-list input");
   const salary = getNumbers($members);
   const membersSalaryError = validateMembersSalary(salary);
   const $errorMessage = document.querySelector("#display-error-message");
