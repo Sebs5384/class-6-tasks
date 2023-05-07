@@ -23,8 +23,9 @@ function createMember() {
   const $memberList = document.querySelectorAll("#member-list input");
   let number = $memberList.length + 1;
 
-  const $div = document.createElement("div");
-  $div.className = "form-floating col-4 gy-4";
+  const $container = document.createElement("div");
+  $container.className = "form-floating col-4 gy-4";
+  $container.id = `div-${number}`;
 
   const $input = document.createElement("input");
   $input.type = "number";
@@ -43,29 +44,23 @@ function createMember() {
   $strong.id = `strong-${number}`;
   $strong.className = "";
 
-  $div.appendChild($input);
-  $div.appendChild($label);
-  $div.appendChild($strong);
+  $container.appendChild($input);
+  $container.appendChild($label);
+  $container.appendChild($strong);
 
   const $members = document.querySelector("#member-list");
-  $members.appendChild($div);
+  $members.appendChild($container);
 }
 
 function removeMember() {
-  const $errorMessage = document.querySelector("#display-error-message");
-  const $memberList = document.querySelectorAll("#member-list input");
+  const $memberList = document.querySelectorAll("#member-list div");
   let number = $memberList.length;
-  const $member = $form.querySelector(`#member-${number}`);
-  const $label = $form.querySelector(`#label-${number}`);
-  const $strong = $form.querySelector(`#strong-${number}`);
-
-  $member.remove();
-  $label.remove();
-  $strong.remove();
+  const $container = $form.querySelector(`#div-${number}`);
+  $container.remove();
 
   if (number === 1) {
-    hideElement("calculate-button", "hidden");
-    $errorMessage.innerText = "";
+    hideElement("calculate-button", "className", "hidden");
+    hideElement("#display-error-message", "innerText", "");
   }
 }
 
@@ -93,7 +88,7 @@ function handleSalaryError(errors) {
   return salaryError;
 }
 
-function hideElement(selector, value) {
+function hideElement(selector, attribute, value) {
   $form.querySelector(selector).className = value;
 }
 
