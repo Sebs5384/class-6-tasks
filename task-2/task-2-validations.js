@@ -20,7 +20,6 @@ function validateMemberSalary() {
   const $members = $form.querySelectorAll("#member-list input");
   const salary = getNumbers($members);
   const membersSalaryError = validateMembersSalary(salary);
-  const $errorMessage = document.querySelector("#display-error-message");
 
   const salaryError = {
     members: membersSalaryError,
@@ -29,14 +28,5 @@ function validateMemberSalary() {
   const isSuccessful = handleSalaryError(salaryError) === 0;
   if (isSuccessful) {
     displaySalaryResults(salary);
-  } else {
-    const $errorList = $form.members;
-    const errors = [];
-    for (let i = 0; i < $errorList.length; i++) {
-      if ($errorList[i].className !== "") {
-        errors.push($errorList[i].id);
-      }
-    }
-    $errorMessage.innerText = `There's an invalid value at ${errors}`;
   }
 }
