@@ -2,7 +2,7 @@ const $form = document.querySelector("#salary-calculator");
 
 $form["button-add-member"].onclick = function () {
   createMember();
-  displayCalculateButton();
+  displayElement('[name="calculate-button"]', "className", "btn btn-primary gy-2 col-auto");
 
   return false;
 };
@@ -64,8 +64,7 @@ function removeMember() {
   $strong.remove();
 
   if (number === 1) {
-    hideCalculateButton();
-    hideResults();
+    hideElement("calculate-button", "hidden");
     $errorMessage.innerText = "";
   }
 }
@@ -94,26 +93,18 @@ function handleSalaryError(errors) {
   return salaryError;
 }
 
-function displaySalary(rate, value) {
-  $form.querySelector(`#${rate}-salary`).innerText = value;
+function hideElement(selector, value) {
+  $form.querySelector(selector).className = value;
 }
 
-function hideResults() {
-  $form.querySelector("#salary-results").className = "hidden";
+function displayElement(selector, attribute, value) {
+  $form.querySelector(selector)[attribute] = value;
 }
 
 function displaySalaryResults(salary) {
   $form.querySelector("#salary-results").className = "col-10 gy-2 alert alert-primary";
-  displaySalary("highest", findMaximumNumber(salary));
-  displaySalary("lowest", findMinimumNumber(salary));
-  displaySalary("average", findAverageNumber(salary).toFixed(1));
-  displaySalary("monthly", findMonthlyAverage(salary).toFixed(1));
-}
-
-function hideCalculateButton() {
-  $form["calculate-button"].className = "hidden";
-}
-
-function displayCalculateButton() {
-  $form["calculate-button"].className = "btn btn-primary gy-2 col-auto";
+  displayElement("#highest-salary", "innerText", findMaximumNumber(salary));
+  displayElement("#lowest-salary", "innerText", findMinimumNumber(salary));
+  displayElement("#average-salary", "innerText", findAverageNumber(salary).toFixed(1));
+  displayElement("#monthly-salary", "innerText", findMonthlyAverage(salary).toFixed(1));
 }
