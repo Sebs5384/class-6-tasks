@@ -2,28 +2,52 @@
 <html lang="en">
   <head>
     <title>class-6-task-2-R/ARGENTINA-PROGRAMA</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="task-2.css" />
   </head>
   <body>
-    <header>
-      <h1>Family members salary calculator</h1>
-      <h2>Click on the buttons to add or remove members</h2>
-    </header>
-    <form id="salary-calculator">
-      <input type="button" value="Add Member" name="button-add-member" />
-      <input type="button" value="Remove Member" name="button-remove-member" />
-      <br />
-      <div id="members" class="created-members"></div>
-      <button type="button" name="calculate-button" class="hidden">Calculate</button>
-      <div id="evaluate-results" class="hidden">
-        <p>The highest salary in your family is:<strong id="highest-salary"></strong></p>
-        <p>The lowest salary in your family is:<strong id="lowest-salary"></strong></p>
-        <p>The average salary in your family is:<strong id="average-salary"></strong></p>
-        <p>The monthly salary in a year is:<strong id="monthly-salary"></strong></p>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="card" style="width: 50rem">
+          <div class="card-body">
+            <form id="salary-calculator">
+              <div class="alert alert-primary">
+                <div class="row justify-content-center">
+                  <small class="col-auto"><h5>Welcome to the salary calculator for your family !</h5></small>
+                  <small class="col-auto">With this small program you can calculate the highest, lowest, average and monthly average !</small>
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-10 alert alert-primary text-center" id="salary-calculator-instructions">
+                  <small class="col-auto">You can add and remove members as you please by using the buttons below</small>
+                </div>
+              </div>
+
+              <div class="row btn-toolbar gap-2 justify-content-center">
+                <button class="btn btn-primary gy-2 col-auto" name="button-add-member">Add member</button>
+                <button class="btn btn-primary gy-2 col-auto" name="button-remove-member">Remove member</button>
+              </div>
+
+              <div class="container row justify-content-center" id="member-list"></div>
+
+              <div class="row btn-toolbar justify-content-center">
+                <button class="btn btn-primary gy-2 col-auto hidden" name="calculate-button">Calculate</button>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-10 gy-2 alert alert-primary hidden" id="salary-results">
+                  <li>The highest salary in your family is: <strong id="highest-salary"></strong></li>
+                  <li>The lowest salary in your family is: <strong id="lowest-salary"></strong></li>
+                  <li>The average salary in your family is: <strong id="average-salary"></strong></li>
+                  <li>The monthly salary in a year is: <strong id="monthly-salary"></strong></li>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <br />
-      <strong id="display-error-message"></strong>
-    </form>
+    </div>
 
     <script src="task-2.js"></script>
     <script src="task-2-calculations.js"></script>

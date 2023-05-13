@@ -17,10 +17,9 @@ function validateMembersSalary(members) {
 }
 
 function validateMemberSalary() {
-  const $members = $form.querySelectorAll(".created-members input");
-  const $salary = getNumbers($members);
-  const membersSalaryError = validateMembersSalary($salary);
-  const $errorMessage = document.querySelector("#display-error-message");
+  const $members = $form.querySelectorAll("#member-list input");
+  const salary = getNumbers($members);
+  const membersSalaryError = validateMembersSalary(salary);
 
   const salaryError = {
     members: membersSalaryError,
@@ -28,20 +27,6 @@ function validateMemberSalary() {
 
   const isSuccessful = handleSalaryError(salaryError) === 0;
   if (isSuccessful) {
-    displaySalary("highest", findMaximumNumber($salary));
-    displaySalary("lowest", findMinimumNumber($salary));
-    displaySalary("average", findAverageNumber($salary).toFixed(1));
-    displaySalary("monthly", findMonthlyAverage($salary).toFixed(1));
-
-    displayResults();
-  } else {
-    const $errorList = $form.members;
-    const errors = [];
-    for (let i = 0; i < $errorList.length; i++) {
-      if ($errorList[i].className !== "") {
-        errors.push($errorList[i].id);
-      }
-    }
-    $errorMessage.innerText = `There's an invalid value at ${errors}`;
+    displaySalaryResults(salary);
   }
 }
