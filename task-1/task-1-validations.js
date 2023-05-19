@@ -51,8 +51,16 @@ function validateMembersQuantity(membersQuantity) {
   };
   const isSuccessful = handleMembersError(quantityError) === 0;
   if (isSuccessful) {
+    const nextStep = {
+      0: "The next step is to",
+      1: "fill the fields below in order to calculate",
+      2: "the eldest, youngest and average in your family",
+    };
+
+    updateElementText("#age-calculator-instructions div small", nextStep);
     createMembers(membersQuantity);
-    displayButtons();
+    displayElement("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center");
+    hideElement("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center hidden");
   }
   return false;
 }
@@ -65,6 +73,11 @@ function validateMemberAge(membersAge) {
   };
   const isSuccessful = handleAgeErrors(ageError) === 0;
   if (isSuccessful) {
-    displayCalculatedResults(membersAge);
+    const results = {
+      0: `The youngest member on your family is ${findMinimumNumber(membersAge)} years old`,
+      1: `While the oldest is ${findMaximumNumber(membersAge)} years old`,
+      2: `And the average age in your family is ${findAverageNumber(membersAge)}.`,
+    };
+    updateElementText("#age-calculator-instructions div small", results);
   }
 }

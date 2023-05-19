@@ -1,11 +1,8 @@
-const $form = document.querySelector("#age-calculator");
+const $form = document.querySelector("#form");
 
 $form["quantity-submit"].onclick = function () {
-  const existingMembers = $form.members;
-  if (!existingMembers) {
-    const membersQuantity = $form["members-quantity"].value;
-    validateMembersQuantity(membersQuantity);
-  }
+  const membersQuantity = $form["members-quantity"].value;
+  validateMembersQuantity(membersQuantity);
 
   return false;
 };
@@ -16,56 +13,73 @@ $form["calculate-button"].onclick = function () {
   validateMemberAge(members);
 };
 
-$form["reset-form-button"].onclick = function () {
-  hideButtons();
-  removeMembers();
-  hideResults();
+$form["restart-form-button"].onclick = function () {
+  const defaultMessage = {
+    0: "Welcome dear user",
+    1: "This is a small program that calculates your family oldest, youngest and average age !",
+    2: "Entry the number of members your family have to begin",
+  };
+
+  hideElement("#calculation-controls", "className", "btn-toolbar gap-2 justify-content-center hidden");
+  displayElement("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
+  removeElements(".created-members", { 0: "" });
+  updateElementText("#age-calculator-instructions div small", defaultMessage);
 };
 
 function createMembers(quantity) {
-  const $div = document.createElement("div");
-  $div.className = "created-members";
+  const $container = document.createElement("div");
+  $container.className = "created-members row justify-content-center";
+
   for (let i = 0; i < quantity; i++) {
-    const $label = document.createElement("label");
-    $label.innerText = `Family member number #${i + 1}`;
+    const $div = document.createElement("div");
+    $div.className = "form-floating col-6";
 
     const $input = document.createElement("input");
     $input.type = "number";
     $input.name = "members";
-    $input.className = "";
+    $input.className = "form-control";
+    $input.placeholder = "members";
 
-    const $error = document.createElement("strong");
+    const $label = document.createElement("label");
+    $label.innerText = `Family member number #${i + 1}`;
+    $label.className = "form-label text-center";
+
+    const $error = document.createElement("small");
     $error.innerText = "";
+    $error.style = "font-size: 10px";
     $error.id = "error-" + [i + 1];
 
     const $br = document.createElement("br");
 
-    $div.appendChild($label);
     $div.appendChild($input);
+    $div.appendChild($label);
     $div.appendChild($error);
     $div.appendChild($br);
+    $container.appendChild($div);
 
-    const $membersList = document.querySelector("#members-list");
-    $membersList.appendChild($div);
+    const $membersList = document.querySelector("#member-list");
+    $membersList.appendChild($container);
   }
 }
 
 function handleMembersError(errors) {
   const keys = Object.keys(errors);
   let membersErrorQuantity = 0;
-  const $errors = document.querySelector("#errors");
+  const $errors = document.querySelector("#error");
   $errors.innerText = "";
 
   keys.forEach(function (key) {
     const error = errors[key];
     if (error) {
       membersErrorQuantity++;
-      $form[key].className = "error";
+      $form[key].className = "form-control error";
       const $error = document.createElement("li");
       $error.innerText = error;
+      $error.className = "alert alert-danger";
       $errors.appendChild($error);
+      displayElement("#form-submit-buttons", "className", "btn-toolbar gap-2 justify-content-center");
     } else {
-      $form[key].className = "";
+      $form[key].className = "form-control";
     }
   });
   return membersErrorQuantity;
@@ -74,7 +88,7 @@ function handleMembersError(errors) {
 function handleAgeErrors(errors) {
   const keys = Object.keys(errors);
   const $membersInput = document.querySelectorAll(".created-members input");
-  const $membersStrong = document.querySelectorAll(".created-members strong");
+  const $membersSmall = document.querySelectorAll(".created-members small");
 
   let membersAgeError = 0;
   keys.forEach(function (key) {
@@ -82,36 +96,37 @@ function handleAgeErrors(errors) {
     for (key in input) {
       if (input[key] !== "") {
         membersAgeError++;
-        $membersInput[key].className = "error";
-        $membersStrong[key].innerText = input[key];
+        $membersInput[key].className = "form-control error";
+        $membersSmall[key].innerText = input[key];
       } else {
-        $membersInput[key].className = "";
-        $membersStrong[key].innerText = "";
+        $membersInput[key].className = "form-control";
+        $membersSmall[key].innerText = "";
       }
     }
   });
   return membersAgeError;
 }
 
-function displayCalculatedResults($members) {
-  const $results = document.querySelector("#display-results");
-  $results.className = "";
-  $results.innerText = `The youngest member in your family is ${findMinimumNumber($members)} years old while the oldest is ${findMaximumNumber($members)} and the average age of the whole family is ${findAverageNumber($members)}`;
+function displayElement(selector, attribute, value) {
+  document.querySelector(selector)[attribute] = value;
 }
 
-function displayButtons() {
-  document.querySelector("#buttons").className = "";
+function hideElement(selector, attribute, value) {
+  document.querySelector(selector)[attribute] = value;
 }
 
-function hideButtons() {
-  document.querySelector("#buttons").className = "hidden";
+function removeElements(selector, elements) {
+  const $elements = document.querySelectorAll(selector);
+  const indices = Object.keys(elements);
+  indices.forEach((index) => {
+    $elements[index].remove();
+  });
 }
 
-function hideResults() {
-  document.querySelector("#display-results").className = "hidden";
-}
-
-function removeMembers() {
-  const $createdMembers = document.querySelector(".created-members");
-  $createdMembers.remove();
+function updateElementText(selector, texts) {
+  const $selectedElement = document.querySelectorAll(selector);
+  const indices = Object.keys(texts);
+  indices.forEach((index) => {
+    $selectedElement[index].innerText = texts[index];
+  });
 }
