@@ -4,7 +4,9 @@
   "description": "Adding bootstrap styles to the task-1 of class-6 r/argentina-programa",
   "main": "task-1-index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server",
+    "cypress-dev": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -14,5 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.2.3"
+  },
+  "devDependencies": {
+    "cypress": "^12.12.0"
   }
 }
