@@ -35,6 +35,7 @@ function createMembers(quantity) {
     $div.className = "form-floating col-6";
 
     const $input = document.createElement("input");
+    $input.id = `member-${i + 1}`;
     $input.type = "number";
     $input.name = "members";
     $input.className = "form-control";
