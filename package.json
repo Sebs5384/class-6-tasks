@@ -4,7 +4,10 @@
   "description": "Adding bootstrap styles to the task-1 of class-6 r/argentina-programa",
   "main": "task-1-index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server",
+    "cypress-dev": "cypress open",
+    "cypress-run": "cypress run"
   },
   "repository": {
     "type": "git",
