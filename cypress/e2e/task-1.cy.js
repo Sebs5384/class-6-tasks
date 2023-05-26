@@ -46,4 +46,12 @@ describe("Testing task-1-calculator", () => {
     cy.get("#paragraph-2").should("have.text", "This is a small program that calculates your family oldest, youngest and average age !");
     cy.get("#paragraph-3").should("have.text", "Entry the number of members your family have to begin");
   });
+
+  it("Test the reset button", () => {
+    cy.visit(URL);
+
+    cy.get('input[name="members-quantity"]').type("4");
+    cy.get("#reset-button").click();
+    cy.get('input[name="members-quantity"]').should("have.value", "");
+  });
 });
