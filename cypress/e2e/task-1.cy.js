@@ -54,4 +54,37 @@ describe("Testing task-1-calculator", () => {
     cy.get("#reset-button").click();
     cy.get('input[name="members-quantity"]').should("have.value", "");
   });
+
+  it("Test errors in the main input", () => {
+    cy.visit(URL);
+
+    cy.get('button[name="quantity-submit"]').click();
+    cy.get(".error").should("be.visible");
+    cy.get("li").should("have.text", "This field can't be empty");
+    cy.get("#reset-button").click();
+    cy.get('input[name="members-quantity"]').type("0");
+    cy.get('button[name="quantity-submit"]').click();
+    cy.get(".error").should("be.visible");
+    cy.get("li").should("have.text", "This field cannot have a value of 0 or be negative");
+    cy.get("#reset-button").click();
+    cy.get('input[name="members-quantity"]').type("3.4");
+    cy.get('button[name="quantity-submit"]').click();
+    cy.get(".error").should("be.visible");
+    cy.get("li").should("have.text", "This field doesn't accept decimals");
+    cy.get("#reset-button").click();
+    cy.get('input[name="members-quantity"]').type("01");
+    cy.get('button[name="quantity-submit"]').click();
+    cy.get(".error").should("be.visible");
+    cy.get("li").should("have.text", "This field should only contain numbers and cannot start with 0");
+    cy.get("#reset-button").click();
+    cy.get('input[name="members-quantity"]').type("111111");
+    cy.get('button[name="quantity-submit"]').click();
+    cy.get(".error").should("be.visible");
+    cy.get("li").should("have.text", "This field should only contain a maximum of 2 characters");
+    cy.get("#reset-button").click();
+    cy.get('input[name="members-quantity"]').type("1");
+    cy.get('button[name="quantity-submit"]').click();
+    cy.get(".error").should("not.exist");
+    cy.get(".created-members").should("exist");
+  });
 });
