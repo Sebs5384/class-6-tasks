@@ -24,7 +24,7 @@ function validateMembersAge(members) {
   const errorObject = {};
   for (let i = 0; i < members.length; i++) {
     const member = members[i];
-    if (member === "") {
+    if (member == "") {
       errorObject[i] = "This field cannot be empty";
     } else if (isNaN(member)) {
       errorObject[i] = "This field doesn't accept non-numeric values";
