@@ -61,7 +61,6 @@ function removeMember() {
 
   if (number === 1) {
     hideElement("calculate-button", "className", "hidden");
-    hideElement("#display-error-message", "innerText", "");
   }
 }
 
