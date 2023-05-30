@@ -1,4 +1,4 @@
-const URL = "http://192.168.18.24:8080/task-2/task-2-index.html";
+const URL = "http://192.168.18.65:8080/task-2/task-2-index.html";
 
 describe("Testing task-2-calculator", () => {
   it("Test the correct use of task-2-calculator", () => {
@@ -32,5 +32,10 @@ describe("Testing task-2-calculator", () => {
     cy.get("member-3").should("not.exist");
     cy.get('button[name="button-remove-member"]').click();
     cy.get("member-2").should("not.exist");
+    cy.get('button[name="button-remove-member"]').click();
+    cy.get("member-1").should("not.exist");
+
+    cy.get("#button-calculate").should("not.be.visible");
+    cy.get("#salary-results").should("not.be.visible");
   });
 });
