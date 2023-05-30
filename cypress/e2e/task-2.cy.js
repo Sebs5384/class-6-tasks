@@ -67,4 +67,63 @@ describe("Testing task-2-calculator", () => {
     cy.get("#average-salary").should("have.text", "2.5");
     cy.get("#monthly-salary").should("have.text", "0.2");
   });
+
+  it("Test the correct then incorrect use of the task-2-calculator", () => {
+    cy.visit(URL);
+
+    for (let i = 0; i < 3; i++) {
+      cy.get('button[name="button-add-member"]').click();
+      cy.get(`#member-${i + 1}`).type(`${i + 1}`);
+    }
+
+    cy.get('button[name="calculate-button"]').should("be.visible");
+    cy.get('button[name="calculate-button"]').click();
+
+    cy.get("#salary-results").should("be.visible");
+    cy.get("#highest-salary").should("have.text", "3");
+    cy.get("#lowest-salary").should("have.text", "1");
+    cy.get("#average-salary").should("have.text", "2.0");
+    cy.get("#monthly-salary").should("have.text", "0.2");
+
+    for (let i = 0; i < 3; i++) {
+      cy.get('button[name="button-add-member"]').click();
+    }
+
+    cy.get("#member-5").type("2.5");
+    cy.get("#member-6").type("12345678");
+
+    cy.get('button[name="calculate-button"]').click();
+    cy.get(".error").should("exist");
+
+    cy.get("#error-4").should("have.text", "This field cannot have a value of 0 or be empty");
+    cy.get("#error-5").should("have.text", "This field cannot have decimal values");
+    cy.get("#error-6").should("have.text", "This field should only contain a maximum of 7 characters");
+
+    for (let i = 2; i < 6; i++) {
+      cy.get(`#member-${i + 1}`).clear();
+      cy.get(`#member-${i + 1}`).type(`${i + 1}`);
+    }
+
+    cy.get('button[name="calculate-button"]').click();
+
+    cy.get("#highest-salary").should("have.text", "6");
+    cy.get("#lowest-salary").should("have.text", "1");
+    cy.get("#average-salary").should("have.text", "3.5");
+    cy.get("#monthly-salary").should("have.text", "0.3");
+
+    cy.get('button[name="button-remove-member"]').click();
+    cy.get('button[name="calculate-button"]').click();
+
+    cy.get("#highest-salary").should("have.text", "5");
+    cy.get("#lowest-salary").should("have.text", "1");
+    cy.get("#average-salary").should("have.text", "3.0");
+    cy.get("#monthly-salary").should("have.text", "0.3");
+
+    for (let i = 0; i < 5; i++) {
+      cy.get('button[name="button-remove-member"]').click();
+    }
+
+    cy.get('button[name="calculate-button"]').should("not.be.visible");
+    cy.get("#salary-results").should("not.be.visible");
+  });
 });
