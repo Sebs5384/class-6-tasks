@@ -60,7 +60,8 @@ function removeMember() {
   $container.remove();
 
   if (number === 1) {
-    hideElement("calculate-button", "className", "hidden");
+    hideElement("#button-calculate", "hidden");
+    hideElement("#salary-results", "hidden");
   }
 }
 
@@ -86,7 +87,7 @@ function handleSalaryError(errors) {
   return salaryError;
 }
 
-function hideElement(selector, attribute, value) {
+function hideElement(selector, value) {
   $form.querySelector(selector).className = value;
 }
 
