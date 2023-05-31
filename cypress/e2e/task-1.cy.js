@@ -1,4 +1,7 @@
 const URL = "http://192.168.18.65:8080/task-1/task-1-index.html";
+const defaultParagraphs = ["Welcome dear user", "This is a small program that calculates your family oldest, youngest and average age !", "Entry the number of members your family have to begin"];
+const expectedParagraphs = ["The youngest member on your family is 1 years old", "While the oldest is 4 years old", "And the average age in your family is 2.5."];
+const expectedErrors = ["This field cannot be empty", "This field doesn't accept decimals", "This field should only contain a maximum of 3 characters", ""];
 
 describe("Testing task-1-calculator", () => {
   it("Test the correct use of task-1-calculator", () => {
@@ -10,15 +13,15 @@ describe("Testing task-1-calculator", () => {
     cy.get("button[name='calculate-button']").should("be.visible");
     cy.get("button[name='restart-form-button']").should("be.visible");
     cy.get(".created-members").should("exist");
-    cy.get("#member-1").type("1");
-    cy.get("#member-2").type("2");
-    cy.get("#member-3").type("3");
-    cy.get("#member-4").type("4");
+
+    for (let i = 0; i < 4; i++) {
+      cy.get(`#member-${i + 1}`).type(`${i + 1}`);
+    }
 
     cy.get("button[name='calculate-button']").click();
-    cy.get("#paragraph-1").should("have.text", "The youngest member on your family is 1 years old");
-    cy.get("#paragraph-2").should("have.text", "While the oldest is 4 years old");
-    cy.get("#paragraph-3").should("have.text", "And the average age in your family is 2.5.");
+    for (let i = 0; i < expectedParagraphs.length; i++) {
+      cy.get(`#paragraph-${i + 1}`).should("have.text", `${expectedParagraphs[i]}`);
+    }
   });
 
   it("Test the correct use of task-1-calculator and restart button", () => {
@@ -30,21 +33,22 @@ describe("Testing task-1-calculator", () => {
     cy.get("button[name='calculate-button']").should("be.visible");
     cy.get("button[name='restart-form-button']").should("be.visible");
     cy.get(".created-members").should("exist");
-    cy.get("#member-1").type("1");
-    cy.get("#member-2").type("2");
-    cy.get("#member-3").type("3");
-    cy.get("#member-4").type("4");
+
+    for (let i = 0; i < 4; i++) {
+      cy.get(`#member-${i + 1}`).type(`${i + 1}`);
+    }
 
     cy.get("button[name='calculate-button']").click();
-    cy.get("#paragraph-1").should("have.text", "The youngest member on your family is 1 years old");
-    cy.get("#paragraph-2").should("have.text", "While the oldest is 4 years old");
-    cy.get("#paragraph-3").should("have.text", "And the average age in your family is 2.5.");
+    for (let i = 0; i < expectedParagraphs; i++) {
+      cy.get(`#paragraph-${i + 1}`).should("have.text", `${expectedParagraphs[i]}`);
+    }
 
     cy.get("button[name='restart-form-button']").click();
     cy.get(".created-members").should("not.exist");
-    cy.get("#paragraph-1").should("have.text", "Welcome dear user");
-    cy.get("#paragraph-2").should("have.text", "This is a small program that calculates your family oldest, youngest and average age !");
-    cy.get("#paragraph-3").should("have.text", "Entry the number of members your family have to begin");
+
+    for (let i = 0; i < defaultParagraphs.length; i++) {
+      cy.get(`#paragraph-${i + 1}`).should("have.text", `${defaultParagraphs[i]}`);
+    }
   });
 
   it("Test the reset button", () => {
@@ -101,37 +105,33 @@ describe("Testing task-1-calculator", () => {
 
     cy.get('button[name="calculate-button"]').click();
     cy.get(".error").should("be.visible");
-    cy.get("#error-1").should("have.text", "This field cannot be empty");
-    cy.get("#error-2").should("have.text", "This field doesn't accept decimals");
-    cy.get("#error-3").should("have.text", "This field should only contain a maximum of 3 characters");
-    cy.get("#error-4").should("have.text", "");
 
-    cy.get("#member-1").clear();
-    cy.get("#member-2").clear();
-    cy.get("#member-3").clear();
-    cy.get("#member-4").clear();
+    for (let i = 0; i < expectedErrors.length; i++) {
+      cy.get(`#error-${i + 1}`).should("have.text", `${expectedErrors[i]}`);
+    }
 
-    cy.get("#member-1").type("1");
-    cy.get("#member-2").type("2");
-    cy.get("#member-3").type("3");
-    cy.get("#member-4").type("4");
+    for (let i = 0; i < 4; i++) {
+      cy.get(`#member-${i + 1}`).clear();
+      cy.get(`#member-${i + 1}`).type(`${i + 1}`);
+    }
 
     cy.get('button[name="calculate-button"]').click();
     cy.get(".error").should("not.exist");
-    cy.get("#error-1").should("have.text", "");
-    cy.get("#error-2").should("have.text", "");
-    cy.get("#error-3").should("have.text", "");
-    cy.get("#error-4").should("have.text", "");
 
-    cy.get("#paragraph-1").should("have.text", "The youngest member on your family is 1 years old");
-    cy.get("#paragraph-2").should("have.text", "While the oldest is 4 years old");
-    cy.get("#paragraph-3").should("have.text", "And the average age in your family is 2.5.");
+    for (let i = 0; i < 4; i++) {
+      cy.get(`#error-${i + 1}`).should("have.text", "");
+    }
+
+    for (let i = 0; i < expectedParagraphs.length; i++) {
+      cy.get(`#paragraph-${i + 1}`).should("have.text", `${expectedParagraphs[i]}`);
+    }
 
     cy.get("button[name='restart-form-button']").click();
     cy.get(".created-members").should("not.exist");
-    cy.get("#paragraph-1").should("have.text", "Welcome dear user");
-    cy.get("#paragraph-2").should("have.text", "This is a small program that calculates your family oldest, youngest and average age !");
-    cy.get("#paragraph-3").should("have.text", "Entry the number of members your family have to begin");
+
+    for (let i = 0; i < defaultParagraphs.length; i++) {
+      cy.get(`#paragraph-${i + 1}`).should("have.text", `${defaultParagraphs[i]}`);
+    }
 
     cy.get('input[name="members-quantity"]').clear();
   });
