@@ -11,7 +11,7 @@ function testValidateFamilyMembers() {
 function testValidateMembersAge() {
   console.assert(JSON.stringify(validateMembersAge(["", 10])) === JSON.stringify({ 0: "This field cannot be empty", 1: "" }), "validateMembersAge has failed to check if one of the members contains an empty value");
   console.assert(JSON.stringify(validateMembersAge([3.3, 20])) === JSON.stringify({ 0: "This field doesn't accept decimals", 1: "" }), "validateMembersAge has failed to check if the user's input contains a decimal number");
-  console.assert(JSON.stringify(validateMembersAge([0, 30])) === JSON.stringify({ 0: "This field cannot have a value of 0 or be a negative number", 1: "" }), "validateMembersAge has failed to check if the user's input is equal to 0");
+  console.assert(JSON.stringify(validateMembersAge(["0", 30])) === JSON.stringify({ 0: "This field cannot have a value of 0 or be a negative number", 1: "" }), "validateMembersAge has failed to check if the user's input is equal to 0");
   console.assert(JSON.stringify(validateMembersAge(["01", 40])) === JSON.stringify({ 0: "This field should only contain numbers and cannot start with 0", 01: "" }), "validateMembersAge is not handling numbers that start with 0 correctly");
   console.assert(JSON.stringify(validateMembersAge(["Hello", 50])) === JSON.stringify({ 0: "This field doesn't accept non-numeric values", 01: "" }), "validateMembersAge is not handling non-numeric values correctly");
   console.assert(JSON.stringify(validateMembersAge([3333, 60])) === JSON.stringify({ 0: "This field should only contain a maximum of 3 characters", 01: "" }), "validateMembersAge is not handling numeric values with 4 digits correctly");
